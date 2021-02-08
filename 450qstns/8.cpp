@@ -32,3 +32,6 @@ int main()
 	}
 	cout << maxSofar << endl;
 }
+// Input
+// 5
+// 1 2 3 -2 5
