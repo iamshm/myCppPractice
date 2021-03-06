@@ -1,7 +1,7 @@
-// Kadane's Algorithm
 #include <bits/stdc++.h>
 using namespace std;
 
+#define endl '\n'
 #define mod 1000000007
 #define inf 1e18
 void shm() {
@@ -17,21 +17,19 @@ int main()
 	shm();
 	int n;
 	cin >> n;
-	int a[n];
-	for (int i = 0; i < n; i++) {cin >> a[i];}
-	int maxSofar = 0, maxHere = 0;
+	vector<int> a(n);
+	for (int i = 0; i < n; i++) cin >> a[i];
+
+	int maxHere = 0, maxSoFar = 0;
 	for (int i = 0; i < n; i++) {
-		maxHere = maxHere + a[i];
-		if (maxHere < 0)
-		{
-			maxHere = 0;
-		} else if (maxSofar < maxHere)
-		{
-			maxSofar = maxHere;
-		}
+		maxHere = maxHere + a[i] ;
+		maxSoFar = max(maxHere, maxSoFar);
+		maxHere = max(maxHere, 0);
 	}
-	cout << maxSofar << endl;
+	cout << maxSoFar << endl;
 }
-// Input
-// 5
-// 1 2 3 -2 5
+/*
+Kadane's ALgorithm
+8
+-2 -3 -4 -1 -2 1 5 -3
+*/
