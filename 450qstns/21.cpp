@@ -1,3 +1,4 @@
+// subarray with sum 0
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -44,7 +45,8 @@ int main()
 Input
 5
 4 2 -3 1 6
-
+5
+4 2 0 1 6
 for subarray sums in general
 
 --> if there are no negative numbers we can use sliding window
