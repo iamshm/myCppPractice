@@ -1,6 +1,5 @@
 // Trapping Rain water
 
-
 #include <bits/stdc++.h>
 using namespace std;
 
