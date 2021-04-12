@@ -14,7 +14,7 @@ void shm() {
 
 int main()
 {
-	shm();
+	// shm();
 	int n;
 	cin >> n;
 	vector<int> a(n);

@@ -43,7 +43,7 @@ vector<int> commonElements (vector<int> &a, vector<int> &b, vector<int> &c) {
 }
 int main()
 {
-	shm();
+	// shm();
 
 	int n1;
 	cin >> n1;

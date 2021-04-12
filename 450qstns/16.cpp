@@ -55,7 +55,7 @@ int countInversions(int a[], int temp[], int left, int right) {
 
 	int main()
 {
-	shm();
+	// shm();
 	int n;
 	cin >> n;
 	int a(n);
