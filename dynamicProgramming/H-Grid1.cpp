@@ -1,29 +1,20 @@
 // https://atcoder.jp/contests/dp/tasks/dp_h
 #include <bits/stdc++.h>
-
-#include <chrono>
-using namespace std::chrono;
 using namespace std;
 
 #define endl '\n'
 #define mod 1000000007
 #define inf 1e18
 const int MOD = 1e9 + 7;
-void shm() {
-#ifndef ONLINE_JUDGE
-	freopen("D:\\cpp\\input.txt", "r", stdin);
-	freopen("D:\\cpp\\output.txt", "w", stdout);
-#endif
-	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-}
 
 string s[1005];//same as char s[1005][1005] , 2d arr of chars , or array of strings
 int dp[1005][1005]; //2d dp bcos there are two params h & w
 
-int main() {
-	clock_t begin = clock();
-	shm();
+void shm() {
+	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+}
 
+void solve(){
 	int h, w;
 	cin >> h >> w;
 	for (int i = 0; i < h; i++) {
@@ -59,6 +50,16 @@ int main() {
 	// 	cout << endl;
 	// }
 	cout << dp[h - 1][w - 1] << endl;
+}
+
+int main() {
+	clock_t begin = clock();shm();
+
+	int t = 1;
+	//cin >> t;
+	while(t--){
+		solve();
+	}
 
 #ifndef ONLINE_JUDGE
 	clock_t end = clock();

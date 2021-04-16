@@ -14,8 +14,6 @@ void shm() {
 }
 
 int dp[100005];
-
-
 int jump(vector<int> a) {
 	int n = a.size();
 	dp[0] = 0;

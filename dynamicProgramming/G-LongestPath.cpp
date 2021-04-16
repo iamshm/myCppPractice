@@ -25,7 +25,7 @@ void visit(int vertex) {
 	for (auto child : adj[vertex]) {
 		if (dp[child] == -1)//if unvisited
 			visit(child);
-		dp[vertex] =  max(dp[vertex], 1 + dp[child]);
+		dp[vertex] =  max(dp[vertex], 1 + dp[child];)
 	}
 }
 
