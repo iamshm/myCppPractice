@@ -1,4 +1,4 @@
-// https://codeforces.com/contest/1509/problem/B
+// https://atcoder.jp/contests/jsc2021/tasks/jsc2021_b
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -10,24 +10,27 @@ const int MOD = 1e9 + 7;
 #define loop(i,a,b) for(int i =(a);i<=(b);i++)
 #define looprev(i,a,b) for(int i = (a);i>=b;i--)
 
-bool solve() {
-	int n;
-	cin >> n;
-	string s;
-	cin >> s;
-	std::vector<int> t, m;
-	loop(i, 0, n - 1) {
-		if (s[i] == 'T') t.push_back(i);
-		else m.push_back(i);
+void solve() {
+	int n, m;
+	cin >> n >> m;
+	vi a(n); vi b(m);
+	loop(i, 0, n - 1) cin >> a[i];
+	loop(i, 0, m - 1) cin >> b[i];
+	int i = 0; int j = 0;
+	while (i < n and j < m) {
+		if (a[i] > b[j]) {
+			cout << b[j] << " ";
+			j++;
+		} else if (a[i] < b[j]) {
+			cout << a[i] << " ";
+			i++;
+		} else {
+			i++;
+			j++;
+		}
 	}
-	if (t.size() != 2 * m.size()) return false; // t should be twice of m
-
-	loop(i, 0, m.size() - 1)
-	if (m[i] < t[i] || m[i] > t[i + m.size()] ) return false;
-	//if ith 'M' is befor ith 'T' or if it is after i+msize th 'T'
-	return true;
-
-
+	while (i < n) cout << a[i++] << " ";
+	while (j < m) cout << b[j++] << " ";
 
 }
 
@@ -36,10 +39,9 @@ int main() {
 	clock_t begin = clock();
 
 	int t = 1;
-	cin >> t;
+	//cin >> t;
 	while (t--) {
-		cout << (solve() ? "YES" : "NO") << endl;
-
+		solve();
 	}
 
 #ifndef ONLINE_JUDGE

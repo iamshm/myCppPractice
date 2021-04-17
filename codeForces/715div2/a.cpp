@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+// https://codeforces.com/contest/1509/problem/A
 using namespace std;
 
 #define endl '\n'
@@ -13,25 +14,13 @@ void solve() {
 	int n;
 	cin >> n;
 	vi a(n, 0);
-	int evenCount = 0; int oddCount = 0;
-	loop(i, 0, n - 1) {cin >> a[i]; if (a[i] % 2 == 0)evenCount++; else oddCount++;}
+	loop(i, 0, n - 1) cin >> a[i];
+	//[partition method]
+	partition(a.begin(), a.end(), [&](int x) {
+		return x % 2;
+	});
 
-	ll evenArray[evenCount]; ll oddArray[oddCount]; int e = 0; int o = 0;
-	loop(i, 0, n - 1) {
-		if (a[i] % 2 == 0) evenArray[e++] = a[i];
-		else oddArray[o++] = a[i];
-	}
-	if (oddCount >= evenCount) {
-		loop(i, 0, oddCount - 1) cout << oddArray[i] << " ";;
-		looprev(i, evenCount - 1, 0) cout << evenArray[i] << " ";;
-	} else {
-		loop(i, 0, evenCount - 1) cout << evenArray[i] << " ";;
-		looprev(i, oddCount - 1, 0) cout << oddArray[i] << " ";;
-	}
-
-
-
-	// loop(i, 0, n - 1) cout << a[i] << " ";
+	loop(i, 0, n - 1) cout << a[i] << " ";
 	cout << endl;
 }
 

@@ -1,4 +1,4 @@
-// https://codeforces.com/contest/1509/problem/B
+// https://atcoder.jp/contests/jsc2021/tasks/jsc2021_c
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -10,25 +10,21 @@ const int MOD = 1e9 + 7;
 #define loop(i,a,b) for(int i =(a);i<=(b);i++)
 #define looprev(i,a,b) for(int i = (a);i>=b;i--)
 
-bool solve() {
-	int n;
-	cin >> n;
-	string s;
-	cin >> s;
-	std::vector<int> t, m;
-	loop(i, 0, n - 1) {
-		if (s[i] == 'T') t.push_back(i);
-		else m.push_back(i);
+ll a , b;
+
+void solve() {
+	cin >> a >> b;
+	ll dp[a + 1][b + 1];
+	memset(dp, 0, sizeof(dp));
+	ll ans = 0;
+	for (ll i = 1; i <= a; i++) {
+		for (ll j = 1; j <= b; j++) {
+			if ( (dp[i][j] == 0 || dp[j][i] == 0) and (i != j))
+				dp[i][j] = __gcd(i, j);
+			ans = max(ans, max(dp[i][j], dp[i][j]));
+		}
 	}
-	if (t.size() != 2 * m.size()) return false; // t should be twice of m
-
-	loop(i, 0, m.size() - 1)
-	if (m[i] < t[i] || m[i] > t[i + m.size()] ) return false;
-	//if ith 'M' is befor ith 'T' or if it is after i+msize th 'T'
-	return true;
-
-
-
+	cout << ans;
 }
 
 int main() {
@@ -36,10 +32,9 @@ int main() {
 	clock_t begin = clock();
 
 	int t = 1;
-	cin >> t;
+	//cin >> t;
 	while (t--) {
-		cout << (solve() ? "YES" : "NO") << endl;
-
+		solve();
 	}
 
 #ifndef ONLINE_JUDGE
