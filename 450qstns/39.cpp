@@ -1,4 +1,4 @@
-// find median in row wise orted array
+// find median in row wise sorted array
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -6,10 +6,6 @@ using namespace std;
 #define mod 1000000007
 #define inf 1e18
 void shm() {
-#ifndef ONLINE_JUDGE
-	freopen("D:\\cpp\\input.txt", "r", stdin);
-	freopen("D:\\cpp\\output.txt", "w", stdout);
-#endif
 	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 }
 int binaryMedian(vector<vector<int> > a, int r, int c) {
