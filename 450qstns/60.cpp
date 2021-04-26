@@ -37,7 +37,26 @@ void solve() {
 			}
 		}
 	}
-	cout << dp[m][n];
+	cout << dp[m][n] << endl;
+
+	// to backtrack the real operations
+	int i = m; int j = n;
+	while (true)	{
+		if (i == 0 || j == 0)	break;
+		if (s[i - 1] == t[j - 1]) {
+			i--; j--;
+		} else if (dp[i][j] == dp[i - 1][j - 1] + 1) {
+			cout << "Edit " << t[j - 1] << " in str2 to " << s[i - 1] << " in s1";
+			cout << endl;
+			i--; j--;
+		} else if (dp[i][j] == dp[i - 1][j] + 1) {
+			cout << "del in s1 " << s[i - 1];		cout << endl;
+			i--;
+		} else {
+			cout << "del in s2 " << t[j - 1];		cout << endl;
+			j--;
+		}
+	}
 }
 
 int main() {
