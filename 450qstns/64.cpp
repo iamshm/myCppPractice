@@ -1,6 +1,5 @@
-// Word break
-// // https://practice.geeksforgeeks.org/problems/word-break1352/1
-// https://www.youtube.com/watch?v=yr77dVf1RQA
+// https://www.geeksforgeeks.org/rabin-karp-algorithm-for-pattern-searching/
+// Rabin Karp Pattern Matching
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -43,44 +42,50 @@ template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i
 
 /*-------------------------------------------------------------------------------------*/
 
+#define d 256
 
-bool wordBreak(vector<string> &dict, string line) {
-	unordered_set<string> dictMap;
-	for (auto &word : dict) {
-		dictMap.insert(word);
+void rabinKarp(string pat, string txt , int q) {
+	int m = pat.size();
+	int n = txt.size();
+
+	int patHash = 0;
+	int txtHash = 0;
+	int h = 1; // to simmplify callc of rolling hash
+	loop(i, 0, m - 2) {
+		h = (h * d) % q;
 	}
-
-	int n = line.size();
-	debug(n);
-	int dp[n + 1];
-	memset(dp, 0, sizeof(dp));
-	dp[n] = 1;
-	for (int i = n - 1; i >= 0; i--) { // traversing from behind
-		string substring;
-		for (int j = i; j < n; j++) {
-			substring.push_back(line[j]);//making a temporary substring
-			// checking if that substring is available in index
-			// and if the (i+1)th to n string is possible
-			// as dp[i] stores it
-			if (dictMap.find(substring) != dictMap.end() and dp[j + 1] == 1) {
-				dp[i] = 1;
+	loop(i, 0, m - 1) {
+		patHash = (d * patHash + pat[i]) % q;
+		txtHash = (d * txtHash + txt[i]) % q;
+	}
+	int j;
+	loop(i, 0, n - m) {
+		debug(txtHash); debug(patHash);
+		if (patHash == txtHash) {
+			for (j = 0; j < m; j++) {
+				if (pat[j] != txt[i + j]) break;
 			}
+			if (j == m) cout << i << endl;
+		}
+		if (i < n - m) {
+			txtHash = (d * (txtHash - txt[i] * h) + txt[i + m]) % q;
+			if (txtHash < 0)
+				txtHash = txtHash + q;
 		}
 	}
-	return dp[0];
+
 }
+
 void solve() {
-	int n;
-	cin >> n;
-	vector<string> dict;
-	loop(i, 0, n - 1) {
-		string s;
-		cin >> s;
-		dict.push_back(s);
-	}
-	string line ;
-	cin >> line;
-	cout <<	wordBreak(dict, line);
+	int q = 101;
+	string txt, pat;
+	// cin >> pat;
+	// getline(cin, txt);
+	txt = "THIS IS A TEST TEXT TEST ING TEST";
+	pat = "TEST";
+
+
+	rabinKarp(pat, txt, q);
 }
 
 int main() {
@@ -102,21 +107,3 @@ int main() {
 #endif
 	return 0;
 }
-
-/*
-we traverse from 1 to n
-	for every i
-		we make every possible substring and
-		if its that substring is present we make the
-		dp[i]  true if dp[i+1] was true
-in this way we wont be soing overlapping problems
-as dp will store our state
-
-
-Input
-12
-i  like  sam  sung  samsung  mobile ice cream icecream  man  go  mango
-water
-*/
-
-
