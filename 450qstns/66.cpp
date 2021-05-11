@@ -1,7 +1,6 @@
-// https://www.geeksforgeeks.org/rabin-karp-algorithm-for-pattern-searching/
-// Rabin Karp Pattern Matching
-
+//https://www.geeksforgeeks.org/convert-sentence-equivalent-mobile-numeric-keypad-sequence/
 #include <bits/stdc++.h>
+#include <chrono>
 using namespace std;
 
 #define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
@@ -42,68 +41,44 @@ template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i
 
 /*-------------------------------------------------------------------------------------*/
 
-#define d 256
-
-void rabinKarp(string pat, string txt , int q) {
-	int m = pat.size();
-	int n = txt.size();
-
-	int patHash = 0;
-	int txtHash = 0;
-	int h = 1; // to simmplify callc of rolling hash
-	loop(i, 0, m - 2) {
-		h = (h * d) % q;
-	}
-	loop(i, 0, m - 1) {
-		patHash = (d * patHash + pat[i]) % q;
-		txtHash = (d * txtHash + txt[i]) % q;
-	}
-	int j;
-	loop(i, 0, n - m) {
-		debug(txtHash); debug(patHash);
-		if (patHash == txtHash) {
-			for (j = 0; j < m; j++) {
-				if (pat[j] != txt[i + j]) break;
-			}
-			if (j == m) cout << i << endl;
-		}
-		if (i < n - m) {
-			txtHash = (d * (txtHash - txt[i] * h) + txt[i + m]) % q;
-			if (txtHash < 0)
-				txtHash = txtHash + q;
-		}
-	}
-
+string printSequence(string input,string alphabets[]){
+    string output = "";
+    int n = input.size();
+    loop(i,0,n-1){
+        if(input[i] == ' '){
+            output+="0";
+        }else{
+            output +=alphabets[input[i] - 'A'];
+        }
+    }
+    return output;
+}
+void solve(){
+    string input ;
+    cin >> input;
+    //create a array of alphabets
+    string alpha[] = {"2","22","222", "3","33","333","4","44","444","5","55","555","6","66","666","7","77","777","7777","8","88","888","9","99","999","9999"};
+    cout << printSequence(input,alpha);
 }
 
-void solve() {
-	int q = 101;
-	string txt, pat;
-	// cin >> pat;
-	// getline(cin, txt);
-	txt = "THIS IS A TEST TEXT TEST ING TEST";
-	pat = "TEST";
-
-
-	rabinKarp(pat, txt, q);
-}
 
 int main() {
 #ifndef ONLINE_JUDGE
-	freopen("D:\\cpp\\Error.txt", "w", stderr);
+    freopen("/mnt/d/cpp/Error.txt", "w", stderr);
 #endif
-	fastio();
-	clock_t begin = clock();
+    fastio();
+    clock_t begin = clock();
 
-	int t = 1;
-	//cin >> t;
-	while (t--) {
-		solve();
-	}
+    int t = 1;
+    //cin >> t;
+    while(t--){
+        solve();
+    }
 
 #ifndef ONLINE_JUDGE
-	clock_t end = clock();
-	cout << "\n\nExecuted In: " << double(end - begin) / CLOCKS_PER_SEC * 1000 << " ms";
+    clock_t end = clock();
+    cout << "\n\nExecuted In: " << double(end - begin) / CLOCKS_PER_SEC * 1000 << " ms";
 #endif
-	return 0;
+    return 0;
 }
+
