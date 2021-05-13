@@ -7,18 +7,11 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +1 i.in
-badd +1 Error.txt
-badd +2 450qstns/65.cpp
-badd +1 code.vim
-badd +34 term://.//21218:g++\ -std=c++11\ 450qstns/65.cpp\ &&\ ./a.out\ \<\ i.in
-badd +10 NERD_tree_1
-badd +1 ~/.config/nvim/init.vim
-badd +1 ~/.config/nvim/vim-plug/cpp.vim
-badd +1 ~/.config/nvim/vim-plug/basics.vim
+badd +5 term://.//21666:g++\ -std=c++11\ 450qstns/66.cpp\ &&\ ./a.out\ \<\ i.in
+badd +43 ~/.config/nvim/vim-plug/cpp.vim
+badd +89 450qstns/66.cpp
 argglobal
 %argdel
-edit ~/.config/nvim/vim-plug/basics.vim
 set splitbelow splitright
 wincmd t
 set winminheight=0
@@ -26,6 +19,7 @@ set winheight=1
 set winminwidth=0
 set winwidth=1
 argglobal
+if bufexists("term://.//21666:g++\ -std=c++11\ 450qstns/66.cpp\ &&\ ./a.out\ \<\ i.in") | buffer term://.//21666:g++\ -std=c++11\ 450qstns/66.cpp\ &&\ ./a.out\ \<\ i.in | else | edit term://.//21666:g++\ -std=c++11\ 450qstns/66.cpp\ &&\ ./a.out\ \<\ i.in | endif
 setlocal fdm=indent
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -34,11 +28,11 @@ setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 53 - ((34 * winheight(0) + 25) / 51)
+let s:l = 60 - ((59 * winheight(0) + 30) / 60)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-53
+60
 normal! 0
 lcd ~/.config/nvim
 tabnext 1
