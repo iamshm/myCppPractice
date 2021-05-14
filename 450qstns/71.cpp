@@ -48,6 +48,7 @@ void solve(){
     unordered_map<char,int> badMatchTable;
     int patLen =pat.size();
     int textLen =text.size();
+
     // for 0 to n-2 max(1,patlen-index-1)
     loop(i,0,patLen-2){
         badMatchTable[pat[i]] = max(1,patLen-i-1);
