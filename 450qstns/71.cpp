@@ -43,32 +43,40 @@ template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i
 /*-------------------------------------------------------------------------------------*/
 
 void solve(){
-    string text  = "AABAACAADAABAABA"    ;
+    string text  = "AABACCAABAABA";
     string pat ="AABA" ;
     unordered_map<char,int> badMatchTable;
     int patLen =pat.size();
     int textLen =text.size();
-    loop(i,0,patLen-1){
+    // for 0 to n-2 max(1,patlen-index-1)
+    loop(i,0,patLen-2){
         badMatchTable[pat[i]] = max(1,patLen-i-1);
     }
-    for(auto &x : badMatchTable){
-        cerr << x.first << " " << x.second;
-        cerr <<endl;
-    }
+    // for n-1 value will be patLen (for last char)
+    badMatchTable[pat[patLen-1]] = patLen;
 
-    int noOfSkips = 0;
+    //see badMatchTable
+    //for(auto &x : badMatchTable){
+        //cerr << x.first << " " << x.second;
+        //cerr <<endl;
+    //}
 
-    while(noOfSkips <= (textLen -patLen)){
+    int idx = 0;
+
+    while(idx <= textLen - patLen){
         int j = patLen-1;
-        while(j>=0 && pat[j] == text[noOfSkips+j]){
+        while(j >= 0 and text[idx+j] == pat[j]){
             j--;
         }
-
         if(j<0) {
-            cout << "pattern at " << noOfSkips << endl;
-            noOfSkips += (noOfSkips + patLen < textLen) ? patLen - badMatchTable[text[noOfSkips + patLen]] : 1;
+            cout << "Pattern at  "<< idx <<endl;
+            idx+=patLen;
         }else{
-            
+            if(badMatchTable.find(text[idx+j]) != badMatchTable.end()){
+                idx+=badMatchTable[text[idx+j]];
+            }else{
+                idx+=patLen;
+            }
         }
     }
 }
