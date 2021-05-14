@@ -43,7 +43,34 @@ template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i
 /*-------------------------------------------------------------------------------------*/
 
 void solve(){
-    
+    string text  = "AABAACAADAABAABA"    ;
+    string pat ="AABA" ;
+    unordered_map<char,int> badMatchTable;
+    int patLen =pat.size();
+    int textLen =text.size();
+    loop(i,0,patLen-1){
+        badMatchTable[pat[i]] = max(1,patLen-i-1);
+    }
+    for(auto &x : badMatchTable){
+        cerr << x.first << " " << x.second;
+        cerr <<endl;
+    }
+
+    int noOfSkips = 0;
+
+    while(noOfSkips <= (textLen -patLen)){
+        int j = patLen-1;
+        while(j>=0 && pat[j] == text[noOfSkips+j]){
+            j--;
+        }
+
+        if(j<0) {
+            cout << "pattern at " << noOfSkips << endl;
+            noOfSkips += (noOfSkips + patLen < textLen) ? patLen - badMatchTable[text[noOfSkips + patLen]] : 1;
+        }else{
+            
+        }
+    }
 }
 
 int main() {
