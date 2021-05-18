@@ -1,6 +1,6 @@
-//https://docs.google.com/spreadsheets/d/1IjjZF24YfEHHfcGZ1ADaGY7ZVkuI-cGJ/edit#gid=1898312341
-// Minimum reversals to balanced expression
-// https://www.youtube.com/watch?v=8q1sma-qMsA
+//Longest Common Subsequence LCS
+//https://practice.geeksforgeeks.org/problems/longest-common-subsequence-1587115620/1
+//
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -42,64 +42,27 @@ template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i
 
 /*-------------------------------------------------------------------------------------*/
 
-int minReversalsUsingStack(string s){
-    int n = s.size();
-    if(n%2 != 0) return -1;
-    stack<char> stk;
-    loop(i, 0, n-1){
-        if(s[i] == '}' && !stk.empty()){ //if we get closing bracket
-            //then we check if it has a pair or not
-            if (stk.top() == '{'){ // we pop as it has a pair means balanced
-                stk.pop();
-            }else { //we push if no pair available
-                stk.push(s[i]);
+int lcs(string s1,string s2){
+    int n = s1.size();int m = s2.size();
+    int dp[n+1][m+1];
+    memset(dp,0,sizeof(dp));
+
+    for(int i = 1;i<=n;i++){
+        for(int j = 0;j <= m;j++){
+            if(s1[i] == s2[j]){
+                dp[i][j] = 1 + dp[i-1][j-1];
+            }else{
+                dp[i][j] = max(dp[i-1][j],dp[i][j-1]);
             }
-        }else{ // if we have opening bracket we push to stack
-            stk.push(s[i]);
         }
     }
-    int lenOfStringAfterRemovingBalanced = stk.size();
-    // lenOfStringAfterRemovingBalanced will have equal no of opening and closing brackets
-
-    int openBracket = 0;
-    //calculating openingBrackets
-    while(!stk.empty() && stk.top() == '{'){
-        stk.pop();
-        openBracket++;
-    }
-    int closingBracket = lenOfStringAfterRemovingBalanced - openBracket;
-
-    return (ceil((double)openBracket/2) + ceil((double)closingBracket/2));
-
-}
-
-int minReversalWithoutStack(string s){
-    int ans =0 ;
-    int n = s.size();
-    if(n%2 != 0) return -1;
-    int open =0 ;
-    int close =0;
-    loop(i, 0, n-1){
-        if(s[i] == '{') open++; //if opening bracket add its count
-        else{ //if closing bracket 
-            if(!open)close++; //inc its count if no open brackets
-            else open --; //dec open count as we found a mtching close
-        }
-    }
-    ans = (close/2) + (open/2);
-
-    //following will be 1 if ans was odd
-    close%=2;
-    open%=2;
-
-    if(close)  ans+=2;
-    return ans;
+    return dp[n][m];
 }
 void solve(){
-    string s;
-    cin >> s;
-    //cout << minReversalsUsingStack(s);
-    cout << minReversalWithoutStack(s);
+    string s1,s2;
+    cin >> s1 >> s2;
+    
+    cout << lcs(s1,s2);
 }
 
 int main() {

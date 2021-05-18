@@ -57,11 +57,11 @@ void solve(){
     badMatchTable[pat[patLen-1]] = patLen;
 
     //see badMatchTable
-    //for(auto &x : badMatchTable){
-        //cerr << x.first << " " << x.second;
-        //cerr <<endl;
-    //}
-
+    for(auto &x : badMatchTable){
+        cerr << x.first << " " << x.second;
+        cerr <<endl;
+    }
+    debug(pat);
     int idx = 0;
 
     while(idx <= textLen - patLen){
@@ -101,4 +101,5 @@ int main() {
 #endif
     return 0;
 }
+
 
