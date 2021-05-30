@@ -1,7 +1,8 @@
-//https://www.youtube.com/watch?v=Q3iTTwgDb6U
-//Smallest distinct window
-//Sliding window
+//Rerrange characters such that no two adjacent are same
+//https://www.geeksforgeeks.org/rearrange-characters-string-no-two-adjacent/
+
 #include <bits/stdc++.h>
+#include <queue>
 using namespace std;
 
 #define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
@@ -42,48 +43,77 @@ template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i
 
 /*-------------------------------------------------------------------------------------*/
 
+ /* first add element with highest frequency in alternating position */
+string rearrangedString(string s){
+    vi freq(26,0);
+    loop(i,0,s.size()-1) freq[s[i]-'a']++;
+    int n = s.size();
+    // get Max freq character
+    int max = 0;
+    char ch;
+    loop(i, 0, 26-1){
+        if(freq[i] > max){
+            max =  freq[i];
+            ch = 'a' + i;
+        }
+    }
+    int maxCount =  max;
+    if(!n) return "";
+    if(maxCount > (n+1)/2) return "";
+    // filling in  even slots
+    string ans = s;
+    int idx=0;
+    while(maxCount){
+        ans[idx] = ch;
+        idx+=2;
+        maxCount--;
+        freq[ch-'a']--;
+    }
+
+    loop(i, 0, 25){
+        while(freq[i] > 0){
+            idx = (idx >= s.size() ) ? 1: idx;
+            ans[idx] = 'a' + i;
+            idx+=2;
+            freq[i]--;
+        }
+    }
+    return ans;
+}
+
+/* We use priority queue and use pus and pop to add elements alternately   */
+string rearrangedStringUsingHeap(string s){
+    int n = s.size();
+    vi freq(256,0);
+    priority_queue< pair<int, char>> pq;
+    loop(i, 0, n-1) freq[s[i] - 'a']++;
+    for(char ch = 'a'; ch <= 'z';ch++)
+        if(freq[ch-'a'])
+            pq.push(make_pair(freq[ch-'a'],ch));
+    pair<int, char> prev,temp;
+    prev.first = -1;
+    prev.second = '#';
+    string str = "";
+    while(!pq.empty()){
+        temp = pq.top();
+        pq.pop();
+        str+=temp.second;
+
+        if(prev.first >0)
+            pq.push(prev);
+        temp.first--;
+        prev = temp;
+    }
+    if( n!= str.size()) return "";
+    return str;
+    
+}
 void solve(){
     string s;
     cin >> s;
-    set<char> unique;
-    unordered_map<char,int> freq;
-    loop(i,0,s.size()-1){
-        unique.insert(s[i]);
-    }
-    int totalDistinct = unique.size();
 
-    int i=0,j=1; //window size
-
-    freq[s[i]]++; // freq of char present in current window
-    int c = 0; // stores no of distinct char in current window
-    c++;
-    int minm = INT_MAX;
-
-    while(i <= j and j < s.size()){
-        if( c < totalDistinct) { //increase the size of window
-            if(freq[s[j]] == 0 ) c++; // distict char found so increment
-            // no of distinct char in window
-            freq[s[j]]++;
-            j++; // increment the window
-        } else if (c == totalDistinct){ // if we have all the distinct char in the current 
-            // window we try to minimise the size of window
-            minm = min(minm,j-i);
-            if(freq[s[i]] == 1)
-                c--;
-            freq[s[i]]--;
-            i++; // decrement the window
-        }
-    }
-    // This handles a corner case
-    // say incase we found all distinct char on the last element 
-    // then the above loop wont run 
-    while(c==totalDistinct){
-        minm = min(minm,j-i);
-        if(freq[s[i]] == 1) c--;
-        freq[s[i]]--;
-        i++;
-    }
-    cout << minm << endl;
+    cout <<"Placing in Even spaces first"<< rearrangedString(s);
+    cout << "\nUsing Heap Pair " << rearrangedStringUsingHeap(s);
 }
 
 int main() {
@@ -105,4 +135,3 @@ int main() {
 #endif
     return 0;
 }
-

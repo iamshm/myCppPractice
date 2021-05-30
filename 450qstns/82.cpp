@@ -1,11 +1,11 @@
-//https://www.youtube.com/watch?v=Q3iTTwgDb6U
-//Smallest distinct window
-//Sliding window
-#include <bits/stdc++.h>
+/* https://practice.geeksforgeeks.org/problems/print-anagrams-together/1 */
+/* Print anagrams together */
+
+#include <bits/stdc++.h> 
 using namespace std;
 
 #define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
-#define endl '\n'
+#define endl "\n"
 #define inf INT_MAX
 typedef long long ll;
 typedef unsigned long long ull;
@@ -43,66 +43,43 @@ template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i
 /*-------------------------------------------------------------------------------------*/
 
 void solve(){
-    string s;
-    cin >> s;
-    set<char> unique;
-    unordered_map<char,int> freq;
-    loop(i,0,s.size()-1){
-        unique.insert(s[i]);
+    int n;
+    cin >> n;
+    string s[n];
+    vector<pair<string,int>> psi;
+    loop(i,0,n-1) {
+        cin >> s[i];
+        psi.push_back(make_pair(s[i],i));
     }
-    int totalDistinct = unique.size();
-
-    int i=0,j=1; //window size
-
-    freq[s[i]]++; // freq of char present in current window
-    int c = 0; // stores no of distinct char in current window
-    c++;
-    int minm = INT_MAX;
-
-    while(i <= j and j < s.size()){
-        if( c < totalDistinct) { //increase the size of window
-            if(freq[s[j]] == 0 ) c++; // distict char found so increment
-            // no of distinct char in window
-            freq[s[j]]++;
-            j++; // increment the window
-        } else if (c == totalDistinct){ // if we have all the distinct char in the current 
-            // window we try to minimise the size of window
-            minm = min(minm,j-i);
-            if(freq[s[i]] == 1)
-                c--;
-            freq[s[i]]--;
-            i++; // decrement the window
-        }
+    loop(i,0,n-1){
+        string tmp = psi[i].first;
+        sort(tmp.begin(),tmp.end());
+        psi[i].first=tmp;
+        debug(tmp);
     }
-    // This handles a corner case
-    // say incase we found all distinct char on the last element 
-    // then the above loop wont run 
-    while(c==totalDistinct){
-        minm = min(minm,j-i);
-        if(freq[s[i]] == 1) c--;
-        freq[s[i]]--;
-        i++;
+    string  test =  endl;
+    sort(psi.begin(),psi.end());
+    for(auto x:psi){
+       cout << s[x.second] <<endl;
     }
-    cout << minm << endl;
 }
 
 int main() {
 #ifndef ONLINE_JUDGE
-    freopen("/mnt/d/cpp/Error.txt", "w", stderr);
+freopen("/mnt/d/cpp/Error.txt", "w", stderr);
 #endif
-    fastio();
-    clock_t begin = clock();
+fastio();
+clock_t begin = clock();
 
-    int t = 1;
-    //cin >> t;
-    while(t--){
-        solve();
-    }
-
-#ifndef ONLINE_JUDGE
-    clock_t end = clock();
-    cout << "\n\nExecuted In: " << double(end - begin) / CLOCKS_PER_SEC * 1000 << " ms";
-#endif
-    return 0;
+int t = 1;
+//cin >> t;
+while(t--){
+solve();
 }
 
+#ifndef ONLINE_JUDGE
+clock_t end = clock();
+cout << "\nExecuted In: " << double(end - begin) / CLOCKS_PER_SEC * 1000 << " ms";
+#endif
+return 0;
+}

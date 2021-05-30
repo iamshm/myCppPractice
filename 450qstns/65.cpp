@@ -46,18 +46,18 @@ void solve(){
     string s;
     cin >> s;
     int n= s.size();
-    int prefixLenHere=0;
+    int j=0;
     int i=1;
     int lps[n];
     lps[0]=0;
     while(i<n){
-        if(s[i]==s[prefixLenHere]){
-            prefixLenHere++;
-            lps[i]=prefixLenHere;
+        if(s[i]==s[j]){
+            j++;
+            lps[i]=j;
             i++;
         }else{
-            if(prefixLenHere!=0){
-           	    prefixLenHere =lps[prefixLenHere-1];    	   	  
+            if(j!=0){
+           	    j =lps[j-1];    	   	  
             }else{
                lps[i]=0;
                i++;

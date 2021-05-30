@@ -1,6 +1,7 @@
-//https://www.youtube.com/watch?v=Q3iTTwgDb6U
-//Smallest distinct window
-//Sliding window
+/* https://practice.geeksforgeeks.org/problems/smallest-window-in-a-string-containing-all-the-characters-of-another-string-1587115621/1 */
+/* Smallest window having all char of another string */
+/* Sliding window */
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -43,49 +44,46 @@ template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i
 /*-------------------------------------------------------------------------------------*/
 
 void solve(){
-    string s;
-    cin >> s;
-    set<char> unique;
-    unordered_map<char,int> freq;
-    loop(i,0,s.size()-1){
-        unique.insert(s[i]);
+    string s,p;
+    cin >> s >> p;
+    int n =p.size();
+    int count =0;
+    vi freq(256,0);
+    /* Creating frequency array */
+    loop(i,0,n-1){
+        if(freq[p[i]] == 0) count++;
+        freq[p[i]]++;
     }
-    int totalDistinct = unique.size();
+    int i=0,j=0;
+    int ans = INT_MAX;
+    int start = 0;
 
-    int i=0,j=1; //window size
+    while( j < s.size()){
+        freq[s[j]]--;
+        if(freq[s[j]] == 0) count--;
 
-    freq[s[i]]++; // freq of char present in current window
-    int c = 0; // stores no of distinct char in current window
-    c++;
-    int minm = INT_MAX;
-
-    while(i <= j and j < s.size()){
-        if( c < totalDistinct) { //increase the size of window
-            if(freq[s[j]] == 0 ) c++; // distict char found so increment
-            // no of distinct char in window
-            freq[s[j]]++;
-            j++; // increment the window
-        } else if (c == totalDistinct){ // if we have all the distinct char in the current 
-            // window we try to minimise the size of window
-            minm = min(minm,j-i);
-            if(freq[s[i]] == 1)
-                c--;
-            freq[s[i]]--;
-            i++; // decrement the window
+        if(count == 0){ // means we have found all letters atleast once
+            while(count == 0){ // optimising the ans by deleting the chars which are present multiple
+                /* times but also having every element atleast once  */
+                if( ans > j-i+1){
+                    ans = j-i+1;
+                    start =i;
+                }
+                freq[s[i]]++;
+                if(freq[s[i]] >0) count++;
+                i++; // sliding window
+            }
         }
+        j++;
     }
-    // This handles a corner case
-    // say incase we found all distinct char on the last element 
-    // then the above loop wont run 
-    while(c==totalDistinct){
-        minm = min(minm,j-i);
-        if(freq[s[i]] == 1) c--;
-        freq[s[i]]--;
-        i++;
+    if( ans != INT_MAX){
+        cout  << s.substr(start,ans);
+    }else{
+        cout << "-1";
     }
-    cout << minm << endl;
 }
-
+/* timetopractice */
+/* toc */
 int main() {
 #ifndef ONLINE_JUDGE
     freopen("/mnt/d/cpp/Error.txt", "w", stderr);
@@ -105,4 +103,3 @@ int main() {
 #endif
     return 0;
 }
-

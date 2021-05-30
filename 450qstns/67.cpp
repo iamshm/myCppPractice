@@ -1,4 +1,4 @@
-//https://docs.google.com/spreadsheets/d/1IjjZF24YfEHHfcGZ1ADaGY7ZVkuI-cGJ/edit#gid=1898312341
+// https://practice.geeksforgeeks.org/problems/count-the-reversals0401/1
 // Minimum reversals to balanced expression
 // https://www.youtube.com/watch?v=8q1sma-qMsA
 #include <bits/stdc++.h>

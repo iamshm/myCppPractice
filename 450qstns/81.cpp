@@ -1,6 +1,6 @@
-//https://www.youtube.com/watch?v=Q3iTTwgDb6U
-//Smallest distinct window
-//Sliding window
+// Minm char to be added infront so that string becomes pallindrome
+/* https://www.geeksforgeeks.org/minimum-characters-added-front-make-string-palindrome/ */
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -45,47 +45,41 @@ template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i
 void solve(){
     string s;
     cin >> s;
-    set<char> unique;
-    unordered_map<char,int> freq;
-    loop(i,0,s.size()-1){
-        unique.insert(s[i]);
-    }
-    int totalDistinct = unique.size();
+    int n = s.size();
+    string newStr =s;
+    reverse(s.begin(),s.end());
+    string finalStr = newStr+"$"+s;
+    int N = finalStr.size();
+    int lps[N];
 
-    int i=0,j=1; //window size
-
-    freq[s[i]]++; // freq of char present in current window
-    int c = 0; // stores no of distinct char in current window
-    c++;
-    int minm = INT_MAX;
-
-    while(i <= j and j < s.size()){
-        if( c < totalDistinct) { //increase the size of window
-            if(freq[s[j]] == 0 ) c++; // distict char found so increment
-            // no of distinct char in window
-            freq[s[j]]++;
-            j++; // increment the window
-        } else if (c == totalDistinct){ // if we have all the distinct char in the current 
-            // window we try to minimise the size of window
-            minm = min(minm,j-i);
-            if(freq[s[i]] == 1)
-                c--;
-            freq[s[i]]--;
-            i++; // decrement the window
+    int i=1,j=0;
+    lps[0] = 0;
+    while(i < N){
+        if(finalStr[i] == finalStr[j]){
+            j++;
+            lps[i]=j;
+            i++;
+        }else{
+            if(j!=0){
+                j=lps[j-1];
+            }else{
+                lps[i] = 0;
+                i++;
+            }
         }
     }
-    // This handles a corner case
-    // say incase we found all distinct char on the last element 
-    // then the above loop wont run 
-    while(c==totalDistinct){
-        minm = min(minm,j-i);
-        if(freq[s[i]] == 1) c--;
-        freq[s[i]]--;
-        i++;
-    }
-    cout << minm << endl;
+    loop(i,0,N-1) cerr << lps[i] << endl;
+    cout <<n-lps[N-1]<< endl;
 }
 
+/*
+Naive approach
+Check if the existing sting is pallindrome 
+    if Not 
+    eliminate one Element from string end 
+    and repeat
+Every time we eliminate a char we increment a counter(say noOfChars)
+    */
 int main() {
 #ifndef ONLINE_JUDGE
     freopen("/mnt/d/cpp/Error.txt", "w", stderr);
@@ -105,4 +99,3 @@ int main() {
 #endif
     return 0;
 }
-
