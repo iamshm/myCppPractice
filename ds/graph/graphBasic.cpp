@@ -37,6 +37,7 @@ void bfs(int n,vector<int> adj[]){
 void dfs(int node, vector<int> &visited,vector<int> adj[],vector<int> &dfsOutput){
     cout << node << " ";
     visited[node]=1;
+    dfsOutput.push_back(node);
     for(auto it: adj[node]){
         if(!visited[it]){
             dfs(it, visited,adj,dfsOutput);
@@ -56,10 +57,11 @@ void dfsOfGraph(int V, vector<int> adj[]){
         }
     }
     cout << "\n No of components"<<  components;
+    cerr << "HElllo";
 }
 int main(){
 #ifndef ONLINE_JUDGE
-    freopen("/mnt/d/cpp/Error.txt", "w", stderr);
+    freopen("D:\\cpp\\Error.txt", "w", stderr);
 #endif
     int n,m;
     cin >> n >> m;
@@ -76,4 +78,3 @@ int main(){
     return 0;
 
 }
-
