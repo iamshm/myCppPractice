@@ -59,6 +59,17 @@ void dfsOfGraph(int V, vector<int> adj[]){
     cout << "\n No of components"<<  components;
     cerr << "HElllo";
 }
+// Input
+// 10 8
+// 1 3
+// 1 6
+// 6 4
+// 3 4 
+// 6 8
+// 2 9
+// 5 7
+// 7 10
+
 int main(){
 #ifndef ONLINE_JUDGE
     freopen("D:\\cpp\\Error.txt", "w", stderr);

@@ -43,15 +43,13 @@ template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i
 /*-------------------------------------------------------------------------------------*/
 
 void solve(){
-    string wild;
-    string pattern;
-    cin >> wild >> pattern;
     
 }
 
 int main() {
 #ifndef ONLINE_JUDGE
     freopen("/mnt/d/cpp/Error.txt", "w", stderr);
+    freopen("D:\\cpp\\Error.txt", "w", stderr);
 #endif
     fastio();
     clock_t begin = clock();
@@ -68,3 +66,4 @@ int main() {
 #endif
     return 0;
 }
+
