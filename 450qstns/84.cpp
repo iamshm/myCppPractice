@@ -41,36 +41,36 @@ template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_pr
 template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}
 
 /*-------------------------------------------------------------------------------------*/
-string removeAdjRecursively(string s){
+string removeAdjRecursively(string s) {
     string s2;
-    int n=s.size(),l=0,r,flag,last=0;
-    for(int i=0;i < n;){
-        int j = i+1;
-        flag=0;
-        while((s[i] ==s[j]) and j<n){
+    int n = s.size(), l = 0, r, flag, last = 0;
+    for (int i = 0; i < n;) {
+        int j = i + 1;
+        flag = 0;
+        while ((s[i] == s[j]) and j < n) {
             j++;
-            flag=1;
-            last=1;
+            flag = 1;
+            last = 1;
         } // we traverse till we find duplicates
 
-        if(flag==1){
-            l=j; // we update the variables
-            i=j; // as we had found duplicates
-        }else{
-            r=i;
-            s2.append(s.substr(l,r-l+1));
-            l=j;
+        if (flag == 1) {
+            l = j; // we update the variables
+            i = j; // as we had found duplicates
+        } else {
+            r = i;
+            s2.append(s.substr(l, r - l + 1));
+            l = j;
             i++;
         }
     }
-    if(last){ // if previous string had duplicates we again repeat
+    if (last) { // if previous string had duplicates we again repeat
         return removeAdjRecursively(s2);
-    }else{
+    } else {
         return s2;
     }
 }
 
-void solve(){
+void solve() {
     string s;
     cin >> s;
     cout << removeAdjRecursively(s);
@@ -78,14 +78,14 @@ void solve(){
 
 int main() {
 #ifndef ONLINE_JUDGE
-    freopen("/mnt/d/cpp/Error.txt", "w", stderr);
+    freopen("D:\\cpp\\Error.txt", "w", stderr);
 #endif
     fastio();
     clock_t begin = clock();
 
     int t = 1;
     //cin >> t;
-    while(t--){
+    while (t--) {
         solve();
     }
 

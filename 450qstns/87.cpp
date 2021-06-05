@@ -1,5 +1,5 @@
-/* Wildcard String Matching */
-/* https://practice.geeksforgeeks.org/problems/wildcard-string-matching1126/1 */
+// Transformation :- We can only take move element to front
+// https://www.geeksforgeeks.org/transform-one-string-to-another-using-minimum-number-of-given-operation/
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -43,75 +43,49 @@ template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i
 /*-------------------------------------------------------------------------------------*/
 
 void solve() {
-    string pattern, text;
-    cin >> text >> pattern;
-    int t = text.size();
-    int p = pattern.size();
-    int dp[p + 1][t + 1];
-    for (int i = p; i >= 0; i--) {
-        for (int j = t; j >= 0; j--)
-        {
-            if (i == p and j == t) dp[i][j] = 1;
-            else if (i == p) dp[i][j] = 0;
-            else if (j == t)
-            {
-                if (pattern[i] == '*') {
-                    dp[i][j] = dp[i + 1][j];
-                } else {
-                    dp[i][j] = 0;
-                }
-            } else {
-                if (pattern[i] == '?') {
-                    dp[i][j] = dp[i + 1][j + 1];
-                } else if (pattern[i] == '*') {
-                    dp[i][j] = max(dp[i + 1][j], dp[i][j + 1]);
-                } else if (pattern[i] == text[j])
-                {
-                    dp[i][j] = dp[i + 1][j + 1];
-                } else {
+	string s1, s2;
+	cin >> s1 >> s2;
+	int m = s1.size() , n = s2.size();
+	bool invalid = false;
+	if (n != m) invalid = true;
+	vector<int> freq(256, 0);
+	for (int i = 0; i < m; i++) freq[s1[i]]++;
+	for (int i = 0; i < n; i++) freq[s2[i]]--;
+	for (int i = 0; i < 256; ++i)
+		if (freq[i])
+			invalid = true;
 
-                    dp[i][j] = 0;
-                }
-            }
-        }
-    }
-    for (int i = 0; i <= p; i++) {
-        for (int j = 0; j <= t; j++)
-        {
-            cerr << dp[i][j] << " ";
-        }
-        cerr << endl;
-    }
-
-    if (dp[0][0] == 1 ) cout << true;
-    else cout << false;
+	int ans = 0;
+	for (int i = n - 1, j = n - 1; i >= 0;) {
+		while (i >= 0 and s1[i] != s2[j]) {
+			i--;
+			ans++;
+		}
+		if (i >= 0) {
+			i--;
+			j--;
+		}
+	}
+	cout << ans;
 }
 
-
-// Input
-// abaaabab
-// ab*a?
-// geeksforgeeks
-// ge?ks*
-// baaabab
-// ba*a?
 int main() {
 #ifndef ONLINE_JUDGE
-    freopen("D:\\cpp\\Error.txt", "w", stderr);
+	freopen("D:\\cpp\\Error.txt", "w", stderr);
 #endif
-    fastio();
-    clock_t begin = clock();
+	fastio();
+	clock_t begin = clock();
 
-    int t = 1;
-    //cin >> t;
-    while (t--) {
-        solve();
-    }
+	int t = 1;
+	//cin >> t;
+	while (t--) {
+		solve();
+	}
 
 #ifndef ONLINE_JUDGE
-    clock_t end = clock();
-    cout << "\n\nExecuted In: " << double(end - begin) / CLOCKS_PER_SEC * 1000 << " ms";
+	clock_t end = clock();
+	cout << "\n\nExecuted In: " << double(end - begin) / CLOCKS_PER_SEC * 1000 << " ms";
 #endif
-    return 0;
+	return 0;
 }
 

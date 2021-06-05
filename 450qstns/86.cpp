@@ -1,5 +1,5 @@
-/* Wildcard String Matching */
-/* https://practice.geeksforgeeks.org/problems/wildcard-string-matching1126/1 */
+// Number of customers who dont get a computer
+// https://www.geeksforgeeks.org/function-to-find-number-of-customers-who-could-not-get-a-computer/
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -43,75 +43,56 @@ template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i
 /*-------------------------------------------------------------------------------------*/
 
 void solve() {
-    string pattern, text;
-    cin >> text >> pattern;
-    int t = text.size();
-    int p = pattern.size();
-    int dp[p + 1][t + 1];
-    for (int i = p; i >= 0; i--) {
-        for (int j = t; j >= 0; j--)
-        {
-            if (i == p and j == t) dp[i][j] = 1;
-            else if (i == p) dp[i][j] = 0;
-            else if (j == t)
-            {
-                if (pattern[i] == '*') {
-                    dp[i][j] = dp[i + 1][j];
-                } else {
-                    dp[i][j] = 0;
-                }
-            } else {
-                if (pattern[i] == '?') {
-                    dp[i][j] = dp[i + 1][j + 1];
-                } else if (pattern[i] == '*') {
-                    dp[i][j] = max(dp[i + 1][j], dp[i][j + 1]);
-                } else if (pattern[i] == text[j])
-                {
-                    dp[i][j] = dp[i + 1][j + 1];
-                } else {
+	int computers ;
+	cin >> computers;
+	string s;
+	cin >> s;
+	int seen[26] = {0};
+	// 0 --> customer came
+	// 1 --> customer not alloted to pc
+	// 2 --> customer alloted to pc
+	int ans = 0;
+	int occupied = 0; // to track no of pc used
 
-                    dp[i][j] = 0;
-                }
-            }
-        }
-    }
-    for (int i = 0; i <= p; i++) {
-        for (int j = 0; j <= t; j++)
-        {
-            cerr << dp[i][j] << " ";
-        }
-        cerr << endl;
-    }
+	for (int i = 0; i < s.size(); i++) {
+		int idx = s[i] - 'A';
 
-    if (dp[0][0] == 1 ) cout << true;
-    else cout << false;
+		if (seen[idx] == 0) { // if new cust check
+			// check if pc available
+			seen[idx] = 1;
+			if (occupied < computers) { // if available he will use
+				occupied++;
+				seen[idx] = 2; // pc alloted to that cust
+			} else { // if pc unavailable then he will leave
+				ans++;
+			}
+		} else if (seen[idx] == 2) { // if cust is alloted it means
+			// now cust is leaving
+			occupied--; // reduce used pc count
+			seen[idx] = 0;
+		}
+	}
+	cout << ans;
 }
 
-
-// Input
-// abaaabab
-// ab*a?
-// geeksforgeeks
-// ge?ks*
-// baaabab
-// ba*a?
 int main() {
 #ifndef ONLINE_JUDGE
-    freopen("D:\\cpp\\Error.txt", "w", stderr);
+	freopen("D:\\cpp\\Error.txt", "w", stderr);
 #endif
-    fastio();
-    clock_t begin = clock();
+	fastio();
+	clock_t begin = clock();
 
-    int t = 1;
-    //cin >> t;
-    while (t--) {
-        solve();
-    }
+	int t = 1;
+	//cin >> t;
+	while (t--) {
+		solve();
+	}
 
 #ifndef ONLINE_JUDGE
-    clock_t end = clock();
-    cout << "\n\nExecuted In: " << double(end - begin) / CLOCKS_PER_SEC * 1000 << " ms";
+	clock_t end = clock();
+	cout << "\n\nExecuted In: " << double(end - begin) / CLOCKS_PER_SEC * 1000 << " ms";
 #endif
-    return 0;
+	return 0;
 }
+
 

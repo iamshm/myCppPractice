@@ -1,5 +1,5 @@
-/* Wildcard String Matching */
-/* https://practice.geeksforgeeks.org/problems/wildcard-string-matching1126/1 */
+// Isomorphic strings
+// https://practice.geeksforgeeks.org/problems/isomorphic-strings-1587115620/1
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -42,76 +42,51 @@ template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i
 
 /*-------------------------------------------------------------------------------------*/
 
+// for string to be isomorphic
+// if new char appears in s1 then there should be a new char in s2 also
+// if repeated char appears in s1 then it should be in s2 also
+
 void solve() {
-    string pattern, text;
-    cin >> text >> pattern;
-    int t = text.size();
-    int p = pattern.size();
-    int dp[p + 1][t + 1];
-    for (int i = p; i >= 0; i--) {
-        for (int j = t; j >= 0; j--)
-        {
-            if (i == p and j == t) dp[i][j] = 1;
-            else if (i == p) dp[i][j] = 0;
-            else if (j == t)
-            {
-                if (pattern[i] == '*') {
-                    dp[i][j] = dp[i + 1][j];
-                } else {
-                    dp[i][j] = 0;
-                }
-            } else {
-                if (pattern[i] == '?') {
-                    dp[i][j] = dp[i + 1][j + 1];
-                } else if (pattern[i] == '*') {
-                    dp[i][j] = max(dp[i + 1][j], dp[i][j + 1]);
-                } else if (pattern[i] == text[j])
-                {
-                    dp[i][j] = dp[i + 1][j + 1];
-                } else {
+	string a, b;
+	cin >> a >> b;
+	bool invalid = false;
+	// hashmap can aslo be used
+	vector<int> m1(256, 0);
+	vector<int> m2(256, 0);
 
-                    dp[i][j] = 0;
-                }
-            }
-        }
-    }
-    for (int i = 0; i <= p; i++) {
-        for (int j = 0; j <= t; j++)
-        {
-            cerr << dp[i][j] << " ";
-        }
-        cerr << endl;
-    }
-
-    if (dp[0][0] == 1 ) cout << true;
-    else cout << false;
+	if (a.size() != b.size()) invalid = true;
+	for (int i = 0 ; i < a.size(); i++) {
+		if (!m1[a[i]] and !m2[b[i]]) {
+			m1[a[i]] = b[i];  // a-x,b-y
+			m2[b[i]] = a[i];  // x-a,y-b
+		} else if (m1[a[i]] != b[i]) {
+			invalid = true;
+			break;
+		}
+	}
+	if (invalid) cout << "Not Isomorphic" << endl;
+	else cout << "Isomorphic" << endl;
 }
+// aab
+// xxy
 
-
-// Input
-// abaaabab
-// ab*a?
-// geeksforgeeks
-// ge?ks*
-// baaabab
-// ba*a?
 int main() {
 #ifndef ONLINE_JUDGE
-    freopen("D:\\cpp\\Error.txt", "w", stderr);
+	freopen("D:\\cpp\\Error.txt", "w", stderr);
 #endif
-    fastio();
-    clock_t begin = clock();
+	fastio();
+	clock_t begin = clock();
 
-    int t = 1;
-    //cin >> t;
-    while (t--) {
-        solve();
-    }
+	int t = 1;
+	//cin >> t;
+	while (t--) {
+		solve();
+	}
 
 #ifndef ONLINE_JUDGE
-    clock_t end = clock();
-    cout << "\n\nExecuted In: " << double(end - begin) / CLOCKS_PER_SEC * 1000 << " ms";
+	clock_t end = clock();
+	cout << "\n\nExecuted In: " << double(end - begin) / CLOCKS_PER_SEC * 1000 << " ms";
 #endif
-    return 0;
+	return 0;
 }
 
