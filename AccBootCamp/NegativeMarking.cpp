@@ -1,5 +1,3 @@
-// Middle of 3 elements
-// https://practice.geeksforgeeks.org/problems/middle-of-three2926/1
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -41,21 +39,18 @@ template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i
 /*-------------------------------------------------------------------------------------*/
 
 void solve() {
-	vi a(3);
-	for (int i = 0; i < 3; ++i)
-		cin >> a[i];
-	ll maxm = -1, minm = INT_MAX;
-	for (int i = 0; i < 3; ++i)
-	{
-		minm = min(minm, a[i]);
-		maxm = max(maxm, a[i]);
-	}
-	for (int i = 0; i < 3; ++i)
-	{
-		if (a[i] != minm and a[i] != maxm)
-			cout << a[i];
-	}
+	int ques, marksNeeded;
+	cin >> ques >> marksNeeded;
+	//4x - 3y = marks
+	// ques = x + y
+	// 4x - 3ques + 3x = marks
+	// 7x = marks + 3ques
 
+	float idx = (float)((3 * ques) + marksNeeded) / 7;
+	float perCentAge = (float)idx / ques * 100;
+
+	if (  idx > ques) cout << -1 << endl;
+	else std::cout << std::fixed << std::setprecision(2) << perCentAge << endl;
 }
 
 int main() {
@@ -66,7 +61,7 @@ int main() {
 	clock_t begin = clock();
 
 	int t = 1;
-	//cin >> t;
+	cin >> t;
 	while (t--) {
 		solve();
 	}
@@ -78,5 +73,7 @@ int main() {
 	return 0;
 }
 
-// 3
-// 978 518 300
+
+// 2
+// 10 40
+// 10 33

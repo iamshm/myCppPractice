@@ -19,6 +19,7 @@ void shm() {
 #endif
 	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 }
+
 int maxProfitSimpleMethod(vector<int> &a) {
 	int n = a.size();
 	vector<int> profit(n);

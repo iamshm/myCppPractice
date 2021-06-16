@@ -1,6 +1,4 @@
-// Middle of 3 elements
-// https://practice.geeksforgeeks.org/problems/middle-of-three2926/1
-
+// Dijkstra's Algorithm
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -40,22 +38,58 @@ template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i
 
 /*-------------------------------------------------------------------------------------*/
 
-void solve() {
-	vi a(3);
-	for (int i = 0; i < 3; ++i)
-		cin >> a[i];
-	ll maxm = -1, minm = INT_MAX;
-	for (int i = 0; i < 3; ++i)
-	{
-		minm = min(minm, a[i]);
-		maxm = max(maxm, a[i]);
+int dijsktraShortestPath(int src , int dest, vector<pair<int, int>> adj[], int V ) {
+	// https://www.geeksforgeeks.org/implement-min-heap-using-stl/
+	// priority_queue <Type, vector<Type>, ComparisonType > min_heap;
+	vector<int> dist(V + 1, INT_MAX);
+	priority_queue<pair<int, int> , vector<pair<int, int>> , greater<pair<int, int>> > minHeap;
+	//minHeap -> wt,node
+	dist[src] = 0;
+	minHeap.push(make_pair(0, src));
+
+	while (!minHeap.empty()) {
+		int d = minHeap.top().first;
+		int prevNode = minHeap.top().second;
+		minHeap.pop();
+
+		for (auto it : adj[prevNode]) {
+			// adj -> node,wt
+			int nextNode  = it.first;
+			int nextDist = it.second;
+
+			if (dist[prevNode] + nextDist < dist[nextNode]) {
+				dist[nextNode] = dist[prevNode] + nextDist;
+				minHeap.push(make_pair(dist[nextNode], nextNode));
+			}
+		}
 	}
-	for (int i = 0; i < 3; ++i)
+	for (int i = 1; i < V + 1; ++i)
 	{
-		if (a[i] != minm and a[i] != maxm)
-			cout << a[i];
+		cerr << dist[i] << " ";
+	}
+	cerr << endl;
+	if (dist[dest] != INT_MAX) return dist[dest];
+	else return -1;
+}
+
+
+void solve() {
+	int n, m , q;
+	cin >> n >> m >> q;
+	vector<pair<int, int>> adj[n + 1]; // node,weight
+
+	for (int i = 0; i < m; ++i)
+	{
+		int x, y, w;
+		cin >> x >> y >> w;
+		adj[x].push_back({y, w});
 	}
 
+	for (int i = 0; i < q; i++) {
+		int u, v;
+		cin >> u >> v;
+		cout << dijsktraShortestPath(u, v, adj, n) << endl;
+	}
 }
 
 int main() {
@@ -78,5 +112,16 @@ int main() {
 	return 0;
 }
 
-// 3
-// 978 518 300
+// 5 7 5
+// 5 1 5
+// 3 2 1
+// 4 5 3
+// 4 3 5
+// 5 3 3
+// 4 5 4
+// 5 4 5
+// 1 2
+// 1 3
+// 4 4
+// 5 1
+// 3 2

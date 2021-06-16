@@ -1,5 +1,3 @@
-// Middle of 3 elements
-// https://practice.geeksforgeeks.org/problems/middle-of-three2926/1
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -41,20 +39,34 @@ template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i
 /*-------------------------------------------------------------------------------------*/
 
 void solve() {
-	vi a(3);
-	for (int i = 0; i < 3; ++i)
+	// unordered_map<int, int> freq;
+	int n;
+	cin >> n;
+	vi a(n);
+	int k = 7;
+	vi freq(k, 0);
+	for (int i = 0; i < n; ++i)
+	{
 		cin >> a[i];
-	ll maxm = -1, minm = INT_MAX;
-	for (int i = 0; i < 3; ++i)
-	{
-		minm = min(minm, a[i]);
-		maxm = max(maxm, a[i]);
+		freq[a[i] % k]++;
 	}
-	for (int i = 0; i < 3; ++i)
+	for (int i = 0; i < k; ++i)
 	{
-		if (a[i] != minm and a[i] != maxm)
-			cout << a[i];
+		cerr << i << "->" << freq[i] << endl;
 	}
+	int ans = (freq[0] * ( freq[0] - 1) ) / 2; //Nc2
+	debug(ans);
+	for (int i = 1; i <= k / 2; ++i)
+	{
+		if ( i != k - i)
+			ans += freq[i] * freq[k - i];
+	}
+	debug(ans);
+
+	if ( k % 2 == 0)
+		ans += (freq[k / 2] * (freq[k / 2] - 1)) / 2;
+
+	cout << ans;
 
 }
 
@@ -78,5 +90,3 @@ int main() {
 	return 0;
 }
 
-// 3
-// 978 518 300

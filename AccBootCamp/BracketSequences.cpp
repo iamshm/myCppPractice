@@ -1,5 +1,3 @@
-// Middle of 3 elements
-// https://practice.geeksforgeeks.org/problems/middle-of-three2926/1
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -41,22 +39,40 @@ template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i
 /*-------------------------------------------------------------------------------------*/
 
 void solve() {
-	vi a(3);
-	for (int i = 0; i < 3; ++i)
-		cin >> a[i];
-	ll maxm = -1, minm = INT_MAX;
-	for (int i = 0; i < 3; ++i)
-	{
-		minm = min(minm, a[i]);
-		maxm = max(maxm, a[i]);
-	}
-	for (int i = 0; i < 3; ++i)
-	{
-		if (a[i] != minm and a[i] != maxm)
-			cout << a[i];
-	}
+	string s;
+	cin >> s;
+	int n = s.size();
 
+	stack<int> st;
+	vi dp(n, 0);
+
+	int length = 0, count = 0;
+
+	for (int i = 0; i < n; ++i)
+	{
+		if (s[i] == '(') {
+			st.push(i);
+			continue;
+		}
+		if (st.empty()) continue;
+		int idx = st.top();
+		st.pop();
+
+		dp[i] = i - idx + 1 + (idx >= 1 ? dp[idx - 1] : 0);
+		if (length < dp[i])
+		{
+			length = dp[i];
+			count = 1;
+		} else if ( dp[i] == length) count++;
+
+	}
+	if ( count == 0) cout << "0 1";
+	else cout << length << " " << count;
 }
+
+
+
+// )((())))(()())
 
 int main() {
 #ifndef ONLINE_JUDGE
@@ -78,5 +94,3 @@ int main() {
 	return 0;
 }
 
-// 3
-// 978 518 300

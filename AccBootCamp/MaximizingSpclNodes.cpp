@@ -1,5 +1,3 @@
-// Middle of 3 elements
-// https://practice.geeksforgeeks.org/problems/middle-of-three2926/1
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -39,23 +37,41 @@ template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_pr
 template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}
 
 /*-------------------------------------------------------------------------------------*/
+int dirctedToSink(vector<int> aSink, vector<int> adj[], int n) {
+	int count = 0;
+	for ( auto sink : aSink) {
+		for (int i = 1; i <= n; i++) {
+			auto it = std::find(adj[i].begin(), adj[i].end(), sink);
+			if ( it != adj[i].end()) count++;
+		}
 
+	}
+	return count;
+}
 void solve() {
-	vi a(3);
-	for (int i = 0; i < 3; ++i)
-		cin >> a[i];
-	ll maxm = -1, minm = INT_MAX;
-	for (int i = 0; i < 3; ++i)
-	{
-		minm = min(minm, a[i]);
-		maxm = max(maxm, a[i]);
-	}
-	for (int i = 0; i < 3; ++i)
-	{
-		if (a[i] != minm and a[i] != maxm)
-			cout << a[i];
+	int n, m;
+	cin >> n >> m;
+	vector<int> adj[n + 1];
+	vector<int> bdj[n + 1];
+	for (int i = 0 ; i < m; i++) {
+		int x, y;
+		cin >> x >> y;
+		adj[x].push_back(y);
+		bdj[y].push_back(x);
 	}
 
+	vector<int> aSink;
+	vector<int> bSink;
+
+	for (int i = 1; i < n + 1; ++i)
+	{
+		if (!adj[i].size()) aSink.push_back(i);
+		if (!bdj[i].size()) bSink.push_back(i);
+	}
+
+	int count1 = dirctedToSink(aSink, adj, n);
+	int count2 = dirctedToSink(bSink, bdj, n);
+	cout << max(count2, count1);
 }
 
 int main() {
@@ -78,5 +94,10 @@ int main() {
 	return 0;
 }
 
-// 3
-// 978 518 300
+// 5 6
+// 1 2
+// 1 3
+// 1 4
+// 2 5
+// 3 5
+// 3 5
