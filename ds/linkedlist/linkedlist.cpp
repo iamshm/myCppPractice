@@ -126,7 +126,7 @@ Node* implementations(Node* head) {
 	return head;
 }
 int main()
-{	shm();
+{
 	//inserting some nodes
 	Node* head = new Node();
 	Node* second = new Node() ;

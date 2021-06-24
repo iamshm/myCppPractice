@@ -1,3 +1,4 @@
+// Roman NUmbers
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -39,10 +40,10 @@ template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i
 
 /*-------------------------------------------------------------------------------------*/
 
-void solve(){
+void solve() {
     string s;
     cin >> s;
-    unordered_map<char,int> ct;
+    unordered_map<char, int> ct;
     ct['I'] = 1;
     ct['V'] = 5;
     ct['X'] = 10;
@@ -58,17 +59,17 @@ void solve(){
     // XL = 40
     // XC = 90
     int n = s.size();
-    int sum = 0; 
-    
-    loop(i,0,n-1){
-        if(i != n-1){
-            if(ct[s[i]]< ct[s[i+1]]){
-                int temp = ct[s[i+1]] - ct[s[i]];
-                sum+=temp;
+    int sum = 0;
+
+    loop(i, 0, n - 1) {
+        if (i != n - 1) {
+            if (ct[s[i]] < ct[s[i + 1]]) {
+                int temp = ct[s[i + 1]] - ct[s[i]];
+                sum += temp;
                 i++;
             }
-        }else{
-            sum+=ct[s[i]];
+        } else {
+            sum += ct[s[i]];
         }
     }
     cout << sum;
@@ -83,7 +84,7 @@ int main() {
 
     int t = 1;
     //cin >> t;
-    while(t--){
+    while (t--) {
         solve();
     }
 
