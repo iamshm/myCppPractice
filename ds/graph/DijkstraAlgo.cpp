@@ -1,4 +1,6 @@
 // Dijkstra's Algorithm
+// doesnt work for negative weight edges
+// O(V+E)logV
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -62,11 +64,6 @@ void solve() {
 	}
 	cin >> src;
 
-	// for (int i = 0; i < q; i++) {
-	// 	int u, v;
-	// 	cin >> u >> v;
-	// 	cout << dijsktraShortestPath(u, v, adj, n) << endl;
-	// }
 	dijsktraShortestPath(src, adj, n);
 }
 

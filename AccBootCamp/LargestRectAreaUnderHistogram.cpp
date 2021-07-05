@@ -35,6 +35,7 @@ void solve() {
 	cerr << stk.size();
 	while (!stk.empty()) stk.pop();
 
+	// Calculate right boundaries
 	for (ll i = n - 1; i >= 0; i--)
 	{
 		if (stk.empty()) {

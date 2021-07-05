@@ -90,7 +90,7 @@ int SpecialStack::pop()
 }
 int main()
 {
-	shm();
+	// shm();
 	SpecialStack s;
 	s.push(10);
 	s.push(20);
